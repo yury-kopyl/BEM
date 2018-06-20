@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+	<button type="button">Send</button>
+
+	<script>
+		'use strict';
+
+
+		var button = document.querySelectorAll('button');
+
+		window.ajax = function(url, options) {
+			if ( typeof fetch !== 'function' ) {
+				return fetch(url, options)
+					.then(function(response) {
+						return response;
+					})
+			} else {
+				var xhr = new XMLHttpRequest();
+
+				xhr.open(options.method, url, options.async);
+				xhr.send();
+				xhr.onreadystatechange = function() {
+					if (this.readyState !== 4) return;
+
+					// по окончании запроса доступны:
+					// status, statusText
+					// responseText, responseXML (при content-type: text/xml)
+
+					if (this.status !== 200) {
+						// обработать ошибку
+						alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+						return;
+					}
+
+					console.log(JSON.parse(this.responseText));
+					// получить результат из this.responseText или this.responseXML
+				};
+			}
+		};
+
+		var ajax2 = {
+			send: function(url, options) {
+				var self = this;
+
+				if ( typeof fetch !== 'function' ) {
+					return fetch(url, options)
+						.then(function(response) {
+							return response;
+						})
+				} else {
+					var xhr = new XMLHttpRequest();
+
+					xhr.open(options.method, url, options.async);
+					xhr.send();
+					xhr.onreadystatechange = function() {
+						if (this.readyState !== 4) return;
+
+						// по окончании запроса доступны:
+						// status, statusText
+						// responseText, responseXML (при content-type: text/xml)
+
+						if (this.status !== 200) {
+							// обработать ошибку
+							alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+							return;
+						}
+
+						var xhrThis = this;
+
+						self.then(
+							function () {
+								return JSON.parse(xhrThis.responseText);
+							}
+						);
+						// получить результат из this.responseText или this.responseXML
+					};
+				}
+
+				return this;
+			},
+
+			then: function (cb) {
+				cb();
+			}
+		};
+
+		document.addEventListener('click', function() {
+			// window.ajax('https://httpbin.org/get', {method: 'GET', async: true});
+
+			ajax2.send('https://httpbin.org/get', {method: 'GET', async: true})
+				.then(function(response) {
+					console.log(response.headers.get('Content-Type')); // application/json;
+					console.log(response.status); // 200
+
+					return response.json();
+				})/*
+    .then(function(user) {
+      console.log(user); // iliakan
+    })
+    .catch( alert ) */;
+		});
+	</script>
+</body>
+</html>

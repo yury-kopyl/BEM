@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<style>
+		body {
+			margin: 0;
+			pointer-events: none;
+			display: flex;
+			height: 100vh;
+			flex-wrap: wrap;
+			align-items: center;
+			background-color: #292929;
+		}
+
+		#grid {
+			display: flex;
+			flex-wrap: wrap;
+			background-color: #48a7e5;
+			border: 1px solid #000000;
+			width: calc(36 * 7px);
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		.cell {
+			border-collapse: collapse;
+			display: table-cell;
+			width: 5px;
+			height: 5px;
+			background-color: #494949;
+			border: 1px solid #000000;
+		}
+
+		.cell_alive {
+			background-color: #22ff1e;
+		}
+	</style>
+</head>
+<body>
+	<div id="grid"></div>
+
+	<script>
+		class Cell {
+			constructor(row, col, alive = false) {
+				this._row   = row;
+				this._col   = col;
+				this._alive = alive;
+			}
+
+			get row() {
+				return this._row;
+			}
+
+			get col() {
+				return this._col;
+			}
+
+			get alive() {
+				return this._alive;
+			}
+
+			die() {
+				this._alive = false;
+			}
+
+			live() {
+				this._alive = true;
+			}
+		}
+
+		let initCount = 0;
+
+		class Grid {
+			constructor(sizeX = 36, sizeY = 36, isNew = false) {
+				this.sizeX = sizeX;
+				this.sizeY = sizeY;
+
+				this.init(isNew);
+			}
+
+			init(isNew) {
+				let grid = document.getElementById('grid');
+				this.cells = new Array(this.sizeY);
+				this.cellsUI = new Array(this.sizeY);
+
+				for (let r = 0; r < this.sizeY; r++) {
+					this.cells[r] = new Array(this.sizeX);
+					this.cellsUI[r] = new Array(this.sizeX);
+
+					for (let c = 0; c < this.sizeX; c++) {
+						if (isNew) {
+							let isAlive = Math.random() < .5;
+
+							this.cells[r][c] = new Cell(r, c, isAlive);
+							this.cellsUI[r][c] = document.createElement('div');
+							grid.appendChild(this.cellsUI[r][c]);
+						} else {
+							this.cells[r][c] = new Cell(r, c);
+						}
+					}
+				}
+
+				if( initCount === 0 ) {
+					console.log(this.cellsUI);
+					initCount++;
+				}
+			}
+
+			isNeighborAlive(row, col) {
+				let cell;
+
+				if ( col < 0 && row < 0 ) {
+					cell = this.cells[this.sizeY-1][this.sizeX-1];
+				} else if ( col >= this.sizeX && row >= this.sizeY ) {
+					cell = this.cells[0][0];
+				} else if ( row < 0 && col >= this.sizeX ) {
+					cell = this.cells[0][this.sizeX-1];
+				} else if ( row >= this.sizeY && col < 0 ) {
+					cell = this.cells[this.sizeY-1][0];
+				} else if ( col < 0 ) {
+					cell = this.cells[row][this.sizeX-1];
+				} else if ( col >= this.sizeX ) {
+					cell = this.cells[row][0];
+				} else if ( row < 0 ) {
+					cell = this.cells[this.sizeY-1][col];
+				} else if ( row >= this.sizeY ) {
+					cell = this.cells[0][col];
+				} else {
+					cell = this.cells[row][col];
+				}
+
+				// if (!this.cells[row] || !this.cells[col]) return false;
+
+				// let cell = this.cells[row][col];
+
+				return cell && cell.alive;
+			}
+
+			countNeighbors(cell) {
+				let count = 0;
+				let { row, col } = cell;
+
+				if (this.isNeighborAlive(row - 1, col - 1)) count += 1; // ↖️
+				if (this.isNeighborAlive(row - 1, col)) count += 1;     // ⬆️
+				if (this.isNeighborAlive(row - 1, col + 1)) count += 1; // ↗️
+				if (this.isNeighborAlive(row, col + 1)) count += 1;     // ➡️
+				if (this.isNeighborAlive(row + 1, col + 1)) count += 1; // ↘️
+				if (this.isNeighborAlive(row + 1, col)) count += 1;     // ⬇️
+				if (this.isNeighborAlive(row + 1, col - 1)) count += 1; // ↙️
+				if (this.isNeighborAlive(row, col - 1)) count += 1;     // ⬅️
+
+				return count;
+			}
+
+			compute() {
+				let nextGrid = new Grid(this.sizeX, this.sizeY);
+
+				for (let r = 0; r < nextGrid.sizeY; r++) {
+					for (let c = 0; c < nextGrid.sizeX; c++) {
+						let cell = this.cells[r][c];
+						let nextCell = nextGrid.cells[r][c];
+						let numNeighbors = this.countNeighbors(cell);
+
+						if (cell.alive) {
+							if (numNeighbors < 2) { // cell dies
+								nextCell.die();
+							} else if (numNeighbors === 2 || numNeighbors === 3) { // cell lives
+								nextCell.live();
+							} else if (numNeighbors > 3) { // cell dies
+								nextCell.die();
+							}
+						} else {
+							if (numNeighbors === 3) {
+								nextCell.live(); // cell becomes alive
+							}
+						}
+					}
+				}
+
+				this.cells = nextGrid.cells;
+
+				return this;
+			}
+
+			render() {
+				for (let i = 0; i < this.sizeY; i++) {
+					for (let j = 0; j < this.sizeX; j++) {
+						let cell = this.cells[i][j];
+						let cellUI = this.cellsUI[i][j];
+
+						if (cell.alive) {
+							cellUI.className = 'cell cell_alive';
+						} else {
+							cellUI.className = 'cell';
+						}
+					}
+				}
+			}
+		}
+
+		class Game {
+			constructor(gridX, gridY) {
+				this.grid = new Grid(gridX, gridY, true);
+			}
+
+			play() {
+				return this.grid.compute().render();
+			}
+		}
+
+
+
+		/*const sizeX = 137;
+		const sizeY = 274;*/
+		const sizeX = 36;
+		const sizeY = 36;
+		const speed = 1000;
+
+		const game = new Game(sizeX, sizeY);
+
+		setInterval(() => {
+			game.play();
+		}, speed);
+	</script>
+</body>
+</html>
