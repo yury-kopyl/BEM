@@ -29,8 +29,8 @@ function extractClasses (html) {
 		if ( item.slice(-3) === '-js' ) {
 			let parsedClassName = item.slice(0, -3);
 			let parsedString = parsedClassName.split('_');
-			let filePath = parsedString.length === 1 ? `./src/blocks/${parsedClassName}/${parsedClassName}.js` : `./src/blocks/${parsedString[0]}/${parsedClassName}.js`;
-			let includeClassFromJS = require(filePath).classList;
+			let filePath = parsedString.length === 1 ? `./src/blocks/${parsedClassName}/${parsedClassName}.json` : `./src/blocks/${parsedString[0]}/${parsedClassName}.json`;
+			let includeClassFromJS = require(filePath);
 
 			if ( includeClassFromJS ) {
 				for( let key in includeClassFromJS ) {
@@ -62,14 +62,6 @@ function buildBundleSCSS(arr) {
 
 		if ( fs.existsSync(`src/blocks/${fileName}.scss`) ) {
 			fileContent += `@import "../blocks/${fileName}";\n`;
-
-			if ( fs.existsSync(`src/blocks/${fileName}.js`) && fs.existsSync(`src/blocks/${fileName}.json`) ) {
-				let jsClasses = require(`./src/blocks/${fileName}.json`);
-
-				jsClasses.forEach(className => {
-					fileContent += `@import "../blocks/${parsedString[0]}/${className}";\n`;
-				});
-			}
 		} else {
 			fileContent += `//\t\t⚠ file exist ⚠\n// @import "${fileName}";\n`;
 			console.warn(`⚠ file exist: src/blocks/${fileName}.scss`);
