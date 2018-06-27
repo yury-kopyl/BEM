@@ -16,7 +16,8 @@
     "js:watch": "gulp js:watch",
     "class": "node index.js",
     "html2bemjson": "gulp html2bemjson",
-    "handlebars": "gulp handlebars"
+    "handlebars": "gulp handlebars",
+    "mustache": "gulp mustache"
   },
   "author": "",
   "license": "ISC",
@@ -28,6 +29,7 @@
     "gulp": "^3.9.1",
     "gulp-bem-xjst": "^3.0.0",
     "gulp-browserify": "^0.5.1",
+    "gulp-mustache": "^3.0.1",
     "gulp-sass": "^4.0.1",
     "gulp-util": "^3.0.8",
     "handlebars": "^4.0.11",
