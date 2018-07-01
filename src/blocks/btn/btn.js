@@ -1,8 +1,10 @@
 'use strict';
 
+import classList from './btn.json';
+
 class Btn {
 	constructor() {
-		this.buttons = document.querySelectorAll('.btn-js');
+		this.buttons = document.querySelectorAll(`.${classList.INIT_CLASS}`);
 
 		this.init();
 	}
@@ -10,12 +12,12 @@ class Btn {
 	init() {
 		this.addEventListener();
 		this.buttons.forEach(button => {
-			button.classList.remove('btn-js');
+			button.classList.remove(`.${classList.INIT_CLASS}`);
 		});
 	}
 
 	static stopEventClick(event, element) {
-		if ( element.classList.contains('btn_disabled') ) {
+		if ( element.classList.contains(`.${classList.DISABLED_CLASS}`) ) {
 			event.preventDefault();
 		}
 	}
@@ -29,10 +31,6 @@ class Btn {
 	}
 }
 
-const classList = {
-	INIT_CLASS:     'btn-js',
-	DISABLED_CLASS: 'btn_disabled'
-};
+const btn = new Btn();
 
-module.exports.classList = classList;
-module.exports.btn = new Btn();
+export default btn;

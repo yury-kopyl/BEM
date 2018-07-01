@@ -1,49 +1,14 @@
 //		⚠ file exist ⚠
-// @import "page/page";
+// @import "example/example";
 //		⚠ file exist ⚠
-// @import "page/page__header";
-//		⚠ file exist ⚠
-// @import "header/header";
-//		⚠ file exist ⚠
-// @import "page/page__content";
-//		⚠ file exist ⚠
-// @import "content/content";
-//		⚠ file exist ⚠
-// @import "col-4/col-4";
+// @import "example/example__header";
+@import "../blocks/example/example__nav";
+@import "../blocks/example/example__table";
+@import "../blocks/example/example__col-4";
 @import "../blocks/btn/btn";
 @import "../blocks/btn/btn_theme_green";
 @import "../blocks/btn/btn_theme_orange";
-//		⚠ file exist ⚠
-// @import "col-6/col-6";
+@import "../blocks/example/example__col-6";
 @import "../blocks/btn/btn_size_lg";
 //		⚠ file exist ⚠
 // @import "btn/btn_disabled";
-@import "../blocks/modal/modal";
-@import "../blocks/modal/modal__control";
-@import "../blocks/modal/modal__overlay";
-@import "../blocks/modal/modal__window";
-@import "../blocks/modal/modal__header";
-@import "../blocks/form/form";
-@import "../blocks/form/form__group";
-@import "../blocks/label/label";
-@import "../blocks/form/form__label";
-@import "../blocks/input/input";
-@import "../blocks/form/form__control";
-@import "../blocks/form/form__group_theme_double";
-@import "../blocks/form/form__btn";
-@import "../blocks/btn/btn_uppercase";
-@import "../blocks/btn/btn_shadow";
-@import "../blocks/form/form__group_theme_triple";
-@import "../blocks/modal/modal__close";
-//		⚠ file exist ⚠
-// @import "page/page__footer";
-//		⚠ file exist ⚠
-// @import "footer/footer";
-//		⚠ file exist ⚠
-// @import "footer/footer__nav";
-//		⚠ file exist ⚠
-// @import "nav/nav";
-//		⚠ file exist ⚠
-// @import "nav/nav_theme_footer";
-//		⚠ file exist ⚠
-// @import "nav/nav__link";
