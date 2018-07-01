@@ -1,17 +1,23 @@
 //		⚠ file exist ⚠
-// @import "example/example";
+// @import "page/page";
 //		⚠ file exist ⚠
-// @import "example/example__header";
+// @import "page/page__header";
 //		⚠ file exist ⚠
-// @import "col-4/col-4";
+// @import "header/header";
+//		⚠ file exist ⚠
+// @import "page/page__content";
+//		⚠ file exist ⚠
+// @import "content/content";
+//		⚠ file exist ⚠
+// @import "h1/h1";
+//		⚠ file exist ⚠
+// @import "paragraph/paragraph";
 @import "../blocks/btn/btn";
-@import "../blocks/btn/btn_theme_green";
-@import "../blocks/btn/btn_theme_orange";
-//		⚠ file exist ⚠
-// @import "col-6/col-6";
 @import "../blocks/btn/btn_size_lg";
 //		⚠ file exist ⚠
 // @import "btn/btn_disabled";
+@import "../blocks/btn/btn_theme_orange";
+@import "../blocks/btn/btn_theme_green";
 @import "../blocks/modal/modal";
 @import "../blocks/modal/modal__control";
 @import "../blocks/modal/modal__overlay";
@@ -29,3 +35,15 @@
 @import "../blocks/btn/btn_shadow";
 @import "../blocks/form/form__group_theme_triple";
 @import "../blocks/modal/modal__close";
+//		⚠ file exist ⚠
+// @import "page/page__footer";
+//		⚠ file exist ⚠
+// @import "footer/footer";
+//		⚠ file exist ⚠
+// @import "footer/footer__nav";
+//		⚠ file exist ⚠
+// @import "nav/nav";
+//		⚠ file exist ⚠
+// @import "nav/nav_theme_footer";
+//		⚠ file exist ⚠
+// @import "nav/nav__link";

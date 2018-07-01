@@ -7,7 +7,6 @@ const browserify   = require('gulp-browserify');
 const html2bemjson = require('./html2bemjson');
 const handlebars   = require('./handlebars');
 const sass         = require('gulp-sass');
-const mustache     = require("gulp-mustache");
 
 gulp.task('scss:bundle', function () {
 	return gulp.src('./dist/html/**/*.html')
@@ -52,15 +51,5 @@ gulp.task('html2bemjson', function () {
 gulp.task('handlebars', function () {
 	return gulp.src('./src/templates/**/*.hbs')
 		.pipe(handlebars())
-		.pipe(gulp.dest('./dist/html/'));
-});
-
-gulp.task('mustache', function () {
-	return gulp.src('./src/templates/**/*.mustache')
-		.pipe(mustache({
-			msg: "Hello Gulp!",
-			nested_value: "I am nested.",
-			another_value: "1 2 3"
-		},{},{}))
 		.pipe(gulp.dest('./dist/html/'));
 });

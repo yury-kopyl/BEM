@@ -24,6 +24,11 @@ const getTemplates = () => {
 	const hbsList = getFileList('./src/blocks/').filter(item => item.slice(-4) === '.hbs');
 
 	return hbsList.map(item => {
+		console.log({
+			path: item,
+			name: path.basename(item, '.hbs')
+		});
+
 		return {
 			path: item,
 			name: path.basename(item, '.hbs')
