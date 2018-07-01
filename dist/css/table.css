@@ -1,0 +1,20 @@
+.table {
+  border-collapse: collapse; }
+  .table, .table * {
+    box-sizing: border-box; }
+
+.table_theme_main {
+  table-layout: fixed; }
+  .table_theme_main .table__tr:nth-of-type(even) {
+    background-color: #fafbfc; }
+  .table_theme_main .table__tr:nth-of-type(odd) {
+    background-color: #fff; }
+  .table_theme_main .table__td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 10px 7px;
+    border-left: 1px solid #ecf2f3;
+    border-right: 1px solid #ecf2f3;
+    font-size: 14px;
+    line-height: 20px; }

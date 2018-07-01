@@ -1,0 +1,32 @@
+.grid {
+  display: flex;
+  flex-wrap: wrap; }
+
+.grid__col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  box-sizing: border-box; }
+
+.grid__col_3 {
+  flex: 0 0 25%;
+  max-width: 25%; }
+
+.grid__delimiter {
+  width: 100%; }
+
+.grid__col_4 {
+  flex: 0 0 33.33333%;
+  max-width: 33.33333%; }
+
+.grid__col_6 {
+  flex: 0 0 50%;
+  max-width: 50%; }
+
+.grid__col_1 {
+  flex: 0 0 8.33333%;
+  max-width: 8.33333%; }
+
+.grid__col_5 {
+  flex: 0 0 41.66667%;
+  max-width: 41.66667%; }
